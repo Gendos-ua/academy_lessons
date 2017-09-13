@@ -106,7 +106,7 @@ $sum = function (int $num) {
     $innerFunc = function ($inner = null) use ($num, &$innerFunc) {
         static $innerVal = 0;
         if ($inner) {
-            $innerVal += $inner+$num;
+            $innerVal += $innerVal > 0 ? $inner : $inner+$num;
             return $innerFunc;
         }
         return $innerVal;
@@ -119,7 +119,9 @@ $sum = function (int $num) {
 //echo $plusTen(5)(), "<br>";
 //echo $plusTen(10)(), "<br>";
 
-var_dump($sum(30)(15)(100)(100)(300)());
+var_dump(
+    $sum(30)(15)(10)(10)(20)()
+);
 
 
 echo "<hr>";
