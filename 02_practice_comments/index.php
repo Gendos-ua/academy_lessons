@@ -95,7 +95,7 @@ if (isset($_GET['p']) && $_GET['p'] > 1) {
                     <label for="author">Ваше имя:</label>
                     <input type="text" class="form-control"
                            name="author" id="author" required
-                            placeholder="Имя пишите здесь">
+                           placeholder="Имя пишите здесь">
                 </div>
 
                 <div class="form-group">
