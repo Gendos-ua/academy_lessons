@@ -7,6 +7,8 @@
  */
 
 header('HTTP/1.1 201');
+header('Content-Type: application/pdf');
+header('X-Content-Type-Options: nosniff');
 
 $fileName = $_GET['name'];
 $fileDir = __DIR__.DIRECTORY_SEPARATOR.'gallery_files';
