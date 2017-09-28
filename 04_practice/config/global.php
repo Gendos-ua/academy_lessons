@@ -11,6 +11,7 @@ $salt = sha1('salt');
 return [
     'salt' => $salt,
     'company' => 'Наша Компания',
+    'pageIdParam' => 'page',
     'menu' => [
         [
             'id' => 'products',
@@ -21,7 +22,6 @@ return [
             'title' => 'Контакты',
         ]
     ],
-    'pageIdParam' => 'page',
 
     'users' => [
         ['admin', sha1($salt.'123456')],
