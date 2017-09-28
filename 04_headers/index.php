@@ -66,6 +66,24 @@
  *
  */
 
+$user = 'admin';
+$password = '123456';
+
+if ($user !== $_SERVER['PHP_AUTH_USER']
+    || $password !== $_SERVER['PHP_AUTH_PW']
+) {
+    header(
+        'WWW-Authenticate: basic realm="Войдите чтобы увидеть контент"',
+        false,
+        401
+    );
+    echo 'Вы не авторизованы.';
+    exit;
+}
+
+
+session_start([]);
+
 
 #$file = 'pdf.pdf';
 #header('Content-Type: application/pdf;');
@@ -108,6 +126,8 @@ if ($status == 304) {
 }
 */
 
+
+//header('Content-Type: text/plain');
 header('Cache-Control: no-store, must-revalidate');
 header('Pragma: no-cache');
 //header('Content-Disposition: attachment; filename=dl.txt');
@@ -115,8 +135,8 @@ header("Etag: $etag");
 
 
 setcookie(
-    'my_cookie',
-    'val',
+    'SESSID',
+    '2',
     time()+60*60*24,
     '/',
     $_SERVER['SERVER_NAME'],
@@ -129,12 +149,27 @@ setcookie(
 
 /*?><iframe src="frame.php" style="display: none"></iframe><?*/
 
-echo '<pre>';
-print_r(apache_request_headers());
 
-/*function setcookie_ ($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null) {}*/
+//print_r(apache_request_headers());
+//print_r($_SERVER);
 
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $_SESSION['name'] = $_POST['user_name'];
+}
+
+$_SESSION['auth'] = true;
+
+print_r($_SESSION);
+
+?>
+<form method="post">
+    <input name="user_name"
+           value="<?=($_SESSION['name'] ?: '')?>">
+    <button>send</button>
+</form>
+
+<?
 
 
 
