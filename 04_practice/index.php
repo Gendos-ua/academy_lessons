@@ -22,42 +22,40 @@ ob_start();
     <title>Hello world</title>
 </head>
 <body>
-<div class="container">
-    <?php
+<?php
 
-    $page = 'main';
+$page = 'main';
 
-    if (!empty($_GET['page'])) {
-        $page = $_GET['page'];
-    }
-
-
-    // Если человек не авторизован - показываем форму входа
-    if ($_SESSION['auth']) {
-        $page = 'auth';
-    }
+if (!empty($_GET['page'])) {
+    $page = $_GET['page'];
+}
 
 
-    $parts = [
-        'header', $page, 'footer',
-    ];
-    foreach ($parts as $part) {
-        ob_start();
-
-        include 'inc'.DS.$part.'.php';
-
-        $partContent = str_ireplace(
-            '{{basket}}',
-            "В корзине 3 товара",
-            ob_get_clean()
-        );
-
-        echo $partContent;
-    }
+// Если человек не авторизован - показываем форму входа
+if ($_SESSION['auth']) {
+    //$page = 'auth';
+}
 
 
-    ?>
-</div>
+$parts = [
+    'header', $page, 'footer',
+];
+foreach ($parts as $part) {
+    ob_start();
+
+    include 'inc'.DS.$part.'.php';
+
+    $partContent = str_ireplace(
+        '{{basket}}',
+        "В корзине 3 товара",
+        ob_get_clean()
+    );
+
+    echo $partContent;
+}
+
+
+?>
 </body>
 </html>
 <?php

@@ -14,13 +14,24 @@
 
 
 ?>
-<main class="row" style="margin-top: 60px;">
-    <div class="col-md-12">
-        <form action="auth.php" method="post">
-            <input name="login" type="text" placeholder="Логин">
-            <input name="password" type="password" placeholder="Пароль">
-            <button>Войти</button>
-        </form>
-    </div>
-</main>
+<div class="container">
+    <main class="row">
+        <div class="col-md-6 offset-md-3" style="text-align: center">
+            <h1>Вход</h1>
+            <form action="" method="post">
+                <div class="form-group">
+                    <input name="login" type="text"
+                           class="form-control"
+                           placeholder="Логин">
+                </div>
+                <div class="form-group">
+                    <input name="password" type="password"
+                           class="form-control"
+                           placeholder="Пароль">
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </main>
+</div>
 

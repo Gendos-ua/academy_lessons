@@ -7,10 +7,12 @@
  */
 
 ?>
-<footer class="row" style="min-height: 200px">
-    <div class="col-md-12">
-        &copy;
-        <?= date('Y')?>
-        <?= $config['company'] ?>
-    </div>
-</footer>
+<div class="container">
+    <footer class="row" style="min-height: 200px">
+        <div class="col-md-12">
+            &copy;
+            <?= date('Y')?>
+            <?= $config['company'] ?>
+        </div>
+    </footer>
+</div>
