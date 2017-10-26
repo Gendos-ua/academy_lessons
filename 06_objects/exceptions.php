@@ -100,17 +100,24 @@ echo IDrivable::class;
 
 $obj = new Thrower();
 
+/**
+ * @throws Exception
+ * @throws OutOfBoundsException
+ */
+function doSmthing()
+{
+    throw new Exception('I can\'t do it');
+}
+
 
 try {
     // пытаемся что-то выполнить
-    $obj->setNum(19);
-} catch (CustomOutOfBoundsException $e) {
-    // что-то пошло не так 1
-    // + дополнительная логика
-    echo 'Свой класс Ошибка: '.$e->getMessage().':'.$e->getCode();
+    //$obj->setNum(21);
+    doSmthing();
 } catch (Exception $e) {
-    // что-то пошло не так
-    echo 'Ошибка: '.$e->getMessage().':'.$e->getCode();
+    var_dump($e);
+} finally {
+    echo 'В конце-концов.';
 }
 
 
