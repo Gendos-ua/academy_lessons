@@ -66,6 +66,7 @@ DELETE
   CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password'; - создать пользователя
   DROP USER ‘demo’@‘localhost’; - удалить пользователя
 
+
   GRANT ALL PRIVILEGES ON database.* TO 'newuser'@'localhost'; - дать ему полные права на базу даных
   REVOKE ALL PRIVILEGES ON database.* TO 'newuser'@'localhost'; - забрать у него полные права на базу даных
     ALL PRIVILEGES - полный доступ к заданной базе данных (если база данных не указана, то ко всем)

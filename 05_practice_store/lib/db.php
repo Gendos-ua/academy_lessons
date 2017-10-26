@@ -19,6 +19,8 @@ $connection = mysqli_connect(
     $dbPassword,
     $dbName
 );
+$connection->query('SET NAMES utf8;');
+$connection->query('SET CHARSET utf8;');
 
 $tablesMap = [
     'category' => 'category',
