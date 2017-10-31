@@ -55,7 +55,7 @@ class averageRankingMale
         $this->wife = $wife;
     }
 
-    public function eat(Wife $wife)
+    public function eat()
     {
         $food = $this->wife->getFood();
         // кушаем еду
@@ -71,7 +71,7 @@ class averageRankingMale
 
 class highRankingMale
 {
-    private $provider;
+    protected $provider;
 
     public function __construct(IFoodProvider $foodProvider)
     {
@@ -97,3 +97,9 @@ class Restaurant implements IFoodProvider
         return 'еда из ресторана';
     }
 }
+
+
+$restaurant = new Restaurant();
+$man = new highRankingMale($restaurant);
+$man->eat();
+

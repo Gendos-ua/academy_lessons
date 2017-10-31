@@ -10,6 +10,8 @@ use Zoo\Animal;
 use Zoo\getDogString;
 use OtherLib;
 
+use HelloWorld\HelloWorld;
+
 ini_set('display_errors', 1);
 
 spl_autoload_register(function ($name) {

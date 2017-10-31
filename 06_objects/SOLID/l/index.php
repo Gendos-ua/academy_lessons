@@ -22,24 +22,25 @@
  */
 
 
-$bird = new Bird();
 $bird = new Duck();
 $bird = new Penguin();
 
-$hours = 2;
-echo "За 2 часа я пролечу ".($hours*$bird->fly());
-
-
-
-
-class Bird
+function (ICanFly $bird)
 {
-    protected $flySpeed = 10;
+    $hours = 2;
+    echo "За 2 часа я пролечу ".($hours*$bird->fly());
+}
 
-    public function fly()
-    {
-        return $this->flySpeed;
-    }
+
+
+interface ICanFly
+{
+    public function fly();
+}
+
+interface ICanSwim
+{
+    public function swim();
 }
 
 
@@ -49,7 +50,7 @@ class Bird
  *
  * Не нарушает принцип LSP
  */
-class Duck extends Bird
+class Duck implements ICanFly, ICanSwim
 {
     protected $flySpeed = 10;
     protected $swimSpeed = 3;
@@ -71,7 +72,7 @@ class Duck extends Bird
  *
  * Нарушает принцип LSP
  */
-class Penguin extends Bird
+class Penguin implements ICanSwim
 {
     protected $swimSpeed = 3;
 

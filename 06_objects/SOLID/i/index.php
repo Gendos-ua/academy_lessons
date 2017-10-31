@@ -10,7 +10,7 @@
  * I - принцип разделения интерфейса
  * Interface Segregation
  *
- * Клиенты(классы) не должны зависеть отметодов, которые они не используют.
+ * Клиенты(классы) не должны зависеть от методов, которые они не используют.
  * Много специализирвоанных интерфейсов - лучше, чем один универсальный.
  */
 
@@ -68,4 +68,48 @@ class CarTransformer implements ISuperTransformer
 }
 
 
+// ---- ХОРОШО ----
 
+interface ICarTransformer
+{
+    public function toCar();
+}
+
+interface IPlaneTransformer
+{
+    public function toPlane();
+}
+
+interface IShipTransformer
+{
+    public function toShip();
+}
+
+class CarTransformerGood implements ICarTransformer
+{
+    public function toCar()
+    {
+        // TODO: Implement toCar() method.
+    }
+}
+
+
+class SuperTransformerGood implements
+    ICarTransformer, IPlaneTransformer, IShipTransformer
+{
+
+    public function toCar()
+    {
+        echo 'transformed to Car';
+    }
+
+    public function toPlane()
+    {
+        echo 'transformed to Plane';
+    }
+
+    public function toShip()
+    {
+        echo 'transformed to Ship';
+    }
+}
