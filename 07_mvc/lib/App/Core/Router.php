@@ -17,6 +17,8 @@ class Router
 
     protected $action;
 
+    protected $lang;
+
     protected $route;
 
     protected $params;
@@ -25,17 +27,25 @@ class Router
     /**
      * @return mixed
      */
-    public function getController()
+    public function getLang()
     {
-        return $this->controller;
+        return $this->lang;
     }
 
     /**
      * @return mixed
      */
-    public function getAction()
+    public function getController($clean = false)
     {
-        return $this->action;
+        return $this->controller.(!$clean ? 'Controller' : '');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAction($clean = false)
+    {
+        return $this->action.(!$clean ? 'Action' : '');
     }
 
     /**
@@ -59,7 +69,7 @@ class Router
         $this->controller = Config::get('defaultController');
         $this->action = Config::get('defaultAction');
         $this->route = Config::get('defaultRoute');
-
+        $this->lang = Config::get('defaultLanguage');
 
         $parts = parse_url($uri);
 
@@ -68,12 +78,16 @@ class Router
             trim($parts['path'], '/')
         );
 
+        if (current($pathParts) && in_array(current($pathParts), Config::get('languages'))) {
+            $this->lang = array_shift($pathParts);
+        }
+
         if (current($pathParts) && in_array(current($pathParts), Config::get('routes'))) {
             $this->route = array_shift($pathParts);
         }
 
         if (current($pathParts)) {
-            $this->controller = array_shift($pathParts);
+            $this->controller = ucfirst(array_shift($pathParts));
         }
 
         if (current($pathParts)) {

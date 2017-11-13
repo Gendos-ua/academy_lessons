@@ -9,25 +9,21 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
 
-
-spl_autoload_register(function ($name) {
-    $name = str_replace(
-        '\\',
-        DS,
-        $name
-    );
-    include_once ROOT.DS.'lib'.DS.$name.'.php';
-});
+include(ROOT.DS.'etc'.DS.'bootstrap.php');
 
 
-include_once ROOT.DS.'conf'.DS.'config.php';
 
-$uri = $_SERVER['REQUEST_URI'];
+try {
 
-$router = new \App\Core\Router($uri);
+    $uri = $_SERVER['REQUEST_URI'];
 
-echo '<pre>';
-echo 'Route: '.$router->getRoute().PHP_EOL;
-echo 'Controller: '.$router->getController().PHP_EOL;
-echo 'Action: '.$router->getAction().PHP_EOL;
-echo 'Params: '.print_r($router->getParams(), 1).PHP_EOL;
+    App\Core\App::run($uri);
+    App:get();
+
+} catch (Exception $e) {
+    if (App\Core\Config::get('debug')) {
+        echo '<pre>', var_export($e, 1), '</pre>';
+    } else {
+        echo 'Something gone wrong...';
+    }
+}
