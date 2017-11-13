@@ -7,6 +7,10 @@
  */
 
 return [
-    'do_register' => 'Register',
-
+    'header' => [
+        'do_register' => 'Register',
+        'homepage' => 'Home',
+        'pages' => 'Pages',
+        'contact_us' => 'Contact Us',
+    ],
 ];

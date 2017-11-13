@@ -97,4 +97,38 @@ class Router
         $this->params = $pathParts;
 
     }
+
+    /**
+     * Builds uri
+     *
+     * @param $path - Format - lang.route.controller.action
+     * @param $params - params array
+     * @return string
+     */
+    public function buildUri($path, $params = [])
+    {
+        $parts = array_reverse(explode('.', $path));
+        $default = [
+            Config::get('defaultAction'),
+            $this->getController(true),
+            $this->getRoute() !== Config::get('defaultRoute') ? $this->getRoute() : '',
+            $this->getLang() !== Config::get('defaultLanguage') ? $this->getLang() : '',
+        ];
+
+        $c = 0;
+        $result = [];
+        while ($c++ < 4) {
+            $result[] = count($parts) ? array_shift($parts) : $default[$c-1];
+        }
+
+        // prepare params
+        $paramsString = count($params) ? '/'.implode('/', $params) : '';
+
+        // remove empty parts
+        $result = array_filter($result);
+
+        return '/'.implode('/', array_reverse($result)).$paramsString;
+    }
+
+
 }

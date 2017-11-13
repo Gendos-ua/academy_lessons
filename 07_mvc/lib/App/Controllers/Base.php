@@ -11,13 +11,13 @@ namespace App\Controllers;
 class Base
 {
     /** @var array */
-    private $params;
+    protected $params;
 
     /** @var array */
-    private $data;
+    protected $data;
 
     /** @var string */
-    private $template = null;
+    protected $template = null;
 
     /**
      * @return array
@@ -43,4 +43,23 @@ class Base
         return $this->template;
     }
 
+
+    /**
+     * Base constructor.
+     * @param array $params
+     */
+    public function __construct($params = [])
+    {
+        $this->params = $params;
+    }
+
+
+    /**
+     * Throw 404 status & page
+     */
+    public function page404()
+    {
+        header('HTTP/1.1 404 Not Found');
+        $this->template = ROOT.DS.'views'.DS.'pages'.DS.'404.php';
+    }
 }

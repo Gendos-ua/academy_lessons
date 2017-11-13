@@ -20,10 +20,6 @@ spl_autoload_register(function ($name) {
 });
 
 include_once ROOT.DS.'etc'.DS.'config.php';
+include_once ROOT.DS.'etc'.DS.'functions.php';
 
 ini_set('display_errors', App\Core\Config::get('debug') ? 1 : 0);
-
-function __($code, $default = '')
-{
-    return \App\Core\Localization::get($code, $default);
-}

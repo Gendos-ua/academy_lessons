@@ -49,8 +49,10 @@ class Localization
 
     public static function get($code, $default = '')
     {
-        return isset(static::$messages[$code])
-            ? static::$messages[$code]
+        $parts = explode('.', $code);
+
+        return isset(static::$messages[$parts[0]][$parts[1]])
+            ? static::$messages[$parts[0]][$parts[1]]
             : $default;
     }
 }

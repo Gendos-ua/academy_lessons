@@ -16,9 +16,7 @@ include(ROOT.DS.'etc'.DS.'bootstrap.php');
 try {
 
     $uri = $_SERVER['REQUEST_URI'];
-
     App\Core\App::run($uri);
-    App:get();
 
 } catch (Exception $e) {
     if (App\Core\Config::get('debug')) {

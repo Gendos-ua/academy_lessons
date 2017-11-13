@@ -8,10 +8,15 @@
 
 namespace App\Core;
 
+use App\Core\DB\Connection;
+
 class App
 {
     /** @var Router */
     private static $router;
+
+    /** @var DB\IConnection */
+    private static $conn;
 
     /**
      * @return Router
@@ -22,11 +27,26 @@ class App
     }
 
     /**
+     * @return DB\IConnection
+     */
+    public static function getConnection(): DB\IConnection
+    {
+        return self::$conn;
+    }
+
+    /**
      * @param $uri
      * @throws \Exception
      */
     public static function run($uri)
     {
+        static::$conn = new Connection(
+            Config::get('db.host'),
+            Config::get('db.user'),
+            Config::get('db.password'),
+            Config::get('db.name')
+        );
+
         static::$router = new Router($uri);
 
         $route = static::$router->getRoute();
@@ -47,7 +67,7 @@ class App
         }
 
         /** @var \App\Controllers\Base $controller */
-        $controller = new $controllerName;
+        $controller = new $controllerName($params);
 
         if (!method_exists($controller, $action)) {
             throw new \Exception('Action '.$action.' not found in '.$controllerName);
@@ -56,6 +76,8 @@ class App
         if (!$controller instanceof \App\Controllers\Base) {
             throw new \Exception('Controller must extend Base class');
         }
+
+        ob_start();
 
         $controller->$action();
 
@@ -72,6 +94,8 @@ class App
         );
 
         echo $layout->render();
+
+        ob_end_flush();
     }
 
 
