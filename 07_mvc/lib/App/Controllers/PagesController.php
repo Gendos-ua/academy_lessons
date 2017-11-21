@@ -32,7 +32,7 @@ class PagesController extends Base
     {
         $page = $this->pageModel->getById($this->params[0]);
 
-        if (!empty($page) || !$page['active']) {
+        if (!empty($page) && $page['active']) {
             $this->data = $page;
         } else {
             $this->page404();

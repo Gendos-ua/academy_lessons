@@ -62,9 +62,10 @@ class PagesController extends \App\Controllers\Base
 
         if (!$id) {
             App::getSession()->addFlash('Missing page id');
-        } else {
-            $this->pageModel->delete($id);
+        } elseif ($this->pageModel->delete($id)) {
             App::getSession()->addFlash('Page has been deleted');
+        } else {
+            App::getSession()->addFlash('Couldn\'t delete page');
         }
 
         App::getRouter()->redirect(
