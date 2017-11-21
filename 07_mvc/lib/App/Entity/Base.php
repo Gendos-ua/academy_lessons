@@ -20,6 +20,8 @@ abstract class Base
 
     abstract function checkFields($data);
 
+    abstract function getFields();
+
 
     /**
      * Base constructor.
@@ -31,14 +33,34 @@ abstract class Base
     }
 
     /**
+     * @param array $filter
      * @return mixed
      */
-    public function list()
+    public function list($filter = [])
     {
-        $sql = 'SELECT * FROM '.$this->getTableName();
+        $fields = $this->getFields();
+        $where = [];
+        $strWhere = '';
+        foreach ($filter as $fieldName => $value) {
+            if (!in_array($fieldName, $fields)) {
+                continue;
+            }
+
+            //$fieldName = $this->conn->escape($fieldName);
+            $value = $this->conn->escape($value);
+            $where[] = "$fieldName = $value";
+        }
+
+        if (!empty($where)) {
+            $strWhere = ' AND '.implode(' AND ', $where);
+        }
+
+
+        $sql = 'SELECT * FROM '.$this->getTableName().' WHERE 1 '.$strWhere;
+
         return $this->conn->query($sql);
     }
-
+//SELECT * FROM pages WHERE 1  AND 'active' = 1
 
     /**
      * @param $id
@@ -62,8 +84,15 @@ abstract class Base
     {
         $this->checkFields($data);
 
+        $fields = $this->getFields();
+
         $values = [];
         foreach ($data as $key => $val) {
+            if (!in_array($key, $fields)) {
+                unset($data[$key]);
+                continue;
+            }
+
             $this->conn->escape($val);
             if ($id > 0) {
                 $values[] = "$key = ?";
@@ -83,7 +112,7 @@ abstract class Base
             $sql = "INSERT INTO ".$this->getTableName()." ($cols) VALUES ($vals)";
         }
 
-        return $this->conn->query($sql, $data);
+        return $this->conn->query($sql, array_values($data));
     }
 
 
@@ -93,7 +122,9 @@ abstract class Base
      */
     public function delete($id)
     {
-        $sql = 'DELETE * FROM '.$this->getTableName()
+        $id = intval($id);
+
+        $sql = 'DELETE FROM '.$this->getTableName()
             .' WHERE id = '.$this->conn->escape($id);
         return $this->conn->query($sql);
     }

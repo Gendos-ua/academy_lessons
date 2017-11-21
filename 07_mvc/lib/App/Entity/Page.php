@@ -15,6 +15,17 @@ class Page extends Base
         return 'pages';
     }
 
+    public function getFields()
+    {
+        return [
+            'id',
+            'title',
+            'alias',
+            'content',
+            'active',
+        ];
+    }
+
     public function checkFields($data)
     {
         if (!is_string($data['title']) || !strlen($data['title'])) {

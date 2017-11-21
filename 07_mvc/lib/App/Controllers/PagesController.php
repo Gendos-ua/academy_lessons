@@ -25,14 +25,14 @@ class PagesController extends Base
 
     public function indexAction()
     {
-        $this->data = $this->pageModel->list();
+        $this->data = $this->pageModel->list(['active' => 1]);
     }
 
     public function viewAction()
     {
         $page = $this->pageModel->getById($this->params[0]);
 
-        if (!empty($page)) {
+        if (!empty($page) || !$page['active']) {
             $this->data = $page;
         } else {
             $this->page404();

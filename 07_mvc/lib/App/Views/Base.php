@@ -25,11 +25,13 @@ class Base
     protected static function getDefaultTemplate()
     {
         $router = App::getRouter();
+        $route = $router->getRoute();
         $controller = $router->getController(true);
         $action = $router->getAction(true);
 
         return ROOT
             .DS.'views'
+            .DS.strtolower($route)
             .DS.strtolower($controller)
             .DS.strtolower($action).'.php';
     }

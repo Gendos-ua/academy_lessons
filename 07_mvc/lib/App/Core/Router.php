@@ -131,4 +131,14 @@ class Router
     }
 
 
+    /**
+     * @param $uri
+     * @param int $status
+     */
+    public function redirect($uri, $status = 302)
+    {
+        header('Location: '.$uri, true, $status);
+        die;
+    }
+
 }

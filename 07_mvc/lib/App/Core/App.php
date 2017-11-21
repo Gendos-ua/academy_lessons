@@ -18,6 +18,19 @@ class App
     /** @var DB\IConnection */
     private static $conn;
 
+    /** @var Session */
+    private static $session;
+
+
+    /**
+     * @return Session
+     */
+    public static function getSession(): Session
+    {
+        return self::$session;
+    }
+
+
     /**
      * @return Router
      */
@@ -48,6 +61,7 @@ class App
         );
 
         static::$router = new Router($uri);
+        static::$session = Session::getInstance();
 
         $route = static::$router->getRoute();
         $className = static::$router->getController();

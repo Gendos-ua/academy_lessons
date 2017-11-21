@@ -9,6 +9,7 @@
 /** @var array $data */
 
 $router = \App\Core\App::getRouter();
+$session = \App\Core\App::getSession();
 
 ?>
 <!DOCTYPE html>
@@ -37,6 +38,13 @@ $router = \App\Core\App::getRouter();
     </nav>
     <main class="container main">
         <div class="row">
+            <? if ($session->hasFlash()): ?>
+                <? foreach ($session->getFlash() as $message): ?>
+                   <div class="alert alert-warning">
+                       <?= $message ?>
+                   </div>
+                <? endforeach; ?>
+            <? endif; ?>
             <?=$data['content']?>
         </div>
     </main>
