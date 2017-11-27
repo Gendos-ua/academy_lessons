@@ -1,0 +1,19 @@
+{
+    "packageName": "MVC",
+    "require": {
+        "php": "^7.0",
+        "ext-PDO": "*",
+        "ext-session": "*",
+        "monolog/monolog": "~1.23"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    },
+    "autoload": {
+        "files": ["etc/bootstrap.php"],
+        "psr-4": {"": "src/"}
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --bootstrap 'tests/bootstrap.php' tests --colors"
+    }
+}
