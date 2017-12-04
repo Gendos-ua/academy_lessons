@@ -23,6 +23,7 @@ class Session
     protected function destroy()
     {
         session_destroy();
+        self::$instance = null;
     }
 
     public function __destruct()
