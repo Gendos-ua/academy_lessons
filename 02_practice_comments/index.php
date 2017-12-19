@@ -14,14 +14,17 @@ $user = 'root';
 $pass = 'root';
 $charset = 'utf8';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+mb_internal_encoding('UTF-8');
+$dsn = "mysql:host=$host;dbname=$db";//;charset=$charset";
 $opt = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES   => false,
+    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 ];
 $pdo = new PDO($dsn, $user, $pass, $opt);
-
+$pdo -> exec("set names utf8");
+$pdo -> exec("set charset utf8");
 
 
 $filename = __DIR__.'/data.txt';
@@ -67,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 );
                 $authorId = $pdo->lastInsertId();
             }
-            $statement = $pdo->prepare('INSERT INTO comment (author_id1, comment) VALUES (?, ?)');
+            $statement = $pdo->prepare('INSERT INTO comment (author_id, comment) VALUES (?, ?)');
             $statement->bindValue(1, $authorId);
             $statement->bindParam(2, $willBeComment);
             $willBeComment = $comment;
@@ -198,7 +201,7 @@ print_r($result->fetchAll());
                     <?=implode('<br>', $errors)?>
                 </div>
             <?endif;?>
-            <form method="post">
+            <form method="post" enctype="application/x-www-form-urlencoded" accept-charset="UTF-8">
                 <div class="form-group">
                     <label for="author">Ваше имя:</label>
                     <input type="text" class="form-control"
