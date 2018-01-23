@@ -9,34 +9,40 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-//Load composer's autoloader
 require 'vendor/autoload.php';
 
-$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+$mail = new PHPMailer(true);
 try {
     //Server settings
-    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = false;                               // Enable SMTP authentication
-    //$mail->Username = 'user@example.com';                 // SMTP username
-    //$mail->Password = 'secret';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 25;                                    // TCP port to connect to
+    $mail->SMTPDebug = 2;
+    $mail->isSMTP();
+    $mail->Host = 'stmp.mail.yahoo.com';
+    $mail->Port = 25;
+//    $mail->SMTPAuth = false;
+//    $mail->Username = 'user@example.com';
+//    $mail->Password = 'secret';
+    //$mail->SMTPSecure = 'ssl';
 
     //Recipients
     $mail->setFrom('from@example.com', 'Mailer');
     $mail->addAddress('joe@example.net', 'Joe User');     // Name is optional
     $mail->addReplyTo('info@example.com', 'Information');
     $mail->addCC('cc@example.com');
+    $mail->addBCC('gendosua@gmail.com');
 
     //Content
-    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->isHTML(true);
     $mail->Subject = 'Here is the subject';
     $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
+//    $mail->addAttachment('/path/to');
+
     $mail->send();
+//    $mail->clearAddresses();
+//    $mail->clearAllRecipients();
+//    $mail->clearAttachments();
+
     echo 'Message has been sent';
 } catch (Exception $e) {
     echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
