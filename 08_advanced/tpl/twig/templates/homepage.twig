@@ -1,0 +1,46 @@
+{% extends 'base.twig' %}
+
+{# Comment #}
+
+{% import 'macro.twig' as macro %}
+{#{% from 'macro.twig' import macro as macros %}#}
+
+{% set someVar = "I am <br> escaped!" %}
+{% set rangeData = range(1, 3) %}
+{% set assoc = {key: 'value', inner: [1,2,3,4]} %}
+{#{% set simple = ['one','two',3] %}#}
+
+{% block head %}
+    <style type="text/css">
+        footer { background-color: #EEEEEE; }
+    </style>
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    It's a homepage! <br>
+
+    {% if username %}
+        Welcome {{ username }} <br>
+    {% endif %}
+
+    {% autoescape false %}
+        Autoescaped: {{ someVar|e|upper }} <br>
+    {% endautoescape %}
+
+    {% if rangeData %}
+    <ul>
+        {% for n in rangeData %}
+            <li class="" style="font-size: 40px;">{{ n }}</li>
+        {% else %}
+            <li>No data</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {{ rangeData|join(',') }}
+
+    <p>{{ macro.input( 'NAME', '', 'text', 30, "Made by macro!" ) }}</p>
+
+    {% include 'homepagetext.twig' %}
+{% endblock %}

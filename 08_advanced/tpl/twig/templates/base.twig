@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+
+        <style type="text/css">
+            * {padding: 0; margin: 0;}
+            header, main, footer {padding: 50px;}
+            header { background-color: #5bc0de; height: 100px; }
+            main { background-color: #46b8da; height: 300px; }
+            footer { background-color: #bce8f1; height: 50px; }
+        </style>
+    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        {% block header %}
+            <a href="/">Company Name</a>
+        {% endblock %}
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        {% block footer %}
+            &copy; Site name {{ now }}
+        {% endblock %}
+    </footer>
+</body>
+</html>
